@@ -24,7 +24,7 @@ const ProductList: React.FC = () => {
     const fetchData = async () => {
         try {
             const token = localStorage.getItem('token');
-            const res = await axios.get('http://localhost:3000/api/products', {
+            const res = await axios.get('/api/products', {
                 headers: { Authorization: `Bearer ${token}` },
             });
             setProducts(res.data);
@@ -39,7 +39,7 @@ const ProductList: React.FC = () => {
         if (!window.confirm('Are you sure you want to delete this product?')) return;
         try {
             const token = localStorage.getItem('token');
-            await axios.delete(`http://localhost:3000/api/products/${id}`, {
+            await axios.delete(`/api/products/${id}`, {
                 headers: { Authorization: `Bearer ${token}` },
             });
             fetchData();

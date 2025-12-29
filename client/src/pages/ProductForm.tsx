@@ -36,7 +36,7 @@ const ProductForm: React.FC = () => {
             // Ideally should add getById. Let's add getById to backend if needed.
             // But for now, we can iterate if the list is small. Or just fetch from list store if using state manager.
             // Since we don't have state manager, let's just fetch all.
-            const res = await axios.get('http://localhost:3000/api/products', {
+            const res = await axios.get('/api/products', {
                 headers: { Authorization: `Bearer ${token}` },
             });
             const product = res.data.find((p: any) => p.id === id);
@@ -65,11 +65,11 @@ const ProductForm: React.FC = () => {
         try {
             const token = localStorage.getItem('token');
             if (isEdit) {
-                await axios.put(`http://localhost:3000/api/products/${id}`, formData, {
+                await axios.put(`/api/products/${id}`, formData, {
                     headers: { Authorization: `Bearer ${token}` },
                 });
             } else {
-                await axios.post('http://localhost:3000/api/products', formData, {
+                await axios.post('/api/products', formData, {
                     headers: { Authorization: `Bearer ${token}` },
                 });
             }

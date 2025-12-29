@@ -21,7 +21,7 @@ const Dashboard: React.FC = () => {
     const fetchData = async () => {
         try {
             const token = localStorage.getItem('token');
-            const res = await axios.get('http://localhost:3000/api/products', {
+            const res = await axios.get('/api/products', {
                 headers: { Authorization: `Bearer ${token}` },
             });
             setProducts(res.data);
