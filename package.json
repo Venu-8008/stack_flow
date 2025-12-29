@@ -8,7 +8,7 @@
     "build": "npm install --prefix server && npm run build --prefix server && npm install --prefix client && npm run build --prefix client",
     "postinstall": "npm install --prefix server && npm install --prefix client && npm run build --prefix client",
     "vercel-build": "npm install --prefix server && cd server && npx prisma generate && cd .. && npm install --prefix client && npm run build --prefix client",
-    "deploy": "vercel --prod",
+    "deploy": "npx vercel --prod",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
