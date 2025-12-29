@@ -13,6 +13,11 @@ export const register = async (req: Request, res: Response) => {
             return res.status(400).json({ message: 'Missing required fields' });
         }
 
+        if (!process.env.JWT_SECRET) {
+            console.error('JWT_SECRET not configured');
+            return res.status(500).json({ message: 'Server configuration error' });
+        }
+
         const existingUser = await prisma.user.findUnique({ where: { email } });
         if (existingUser) {
             return res.status(400).json({ message: 'User already exists' });
@@ -55,6 +60,9 @@ export const register = async (req: Request, res: Response) => {
         });
     } catch (error) {
         console.error('Registration error:', error);
+        if (error instanceof Error) {
+            console.error('Error details:', error.message, error.stack);
+        }
         res.status(500).json({ message: 'Internal server error' });
     }
 };
@@ -65,6 +73,11 @@ export const login = async (req: Request, res: Response) => {
 
         if (!email || !password) {
             return res.status(400).json({ message: 'Missing credentials' });
+        }
+
+        if (!process.env.JWT_SECRET) {
+            console.error('JWT_SECRET not configured');
+            return res.status(500).json({ message: 'Server configuration error' });
         }
 
         const user = await prisma.user.findUnique({
@@ -99,6 +112,9 @@ export const login = async (req: Request, res: Response) => {
         });
     } catch (error) {
         console.error('Login error:', error);
+        if (error instanceof Error) {
+            console.error('Error details:', error.message, error.stack);
+        }
         res.status(500).json({ message: 'Internal server error' });
     }
 };
