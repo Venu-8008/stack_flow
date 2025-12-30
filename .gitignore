@@ -6,3 +6,6 @@ build
 coverage
 .vscode
 *.log
+
+.vercel
+.env*.local

@@ -59,11 +59,17 @@ export const register = async (req: Request, res: Response) => {
             },
         });
     } catch (error) {
-        console.error('Registration error:', error);
-        if (error instanceof Error) {
-            console.error('Error details:', error.message, error.stack);
-        }
-        res.status(500).json({ message: 'Internal server error' });
+        console.error('\n\n================================================================================');
+        console.error('❌ REGISTRATION ERROR ❌');
+        console.error('--------------------------------------------------------------------------------');
+        console.error('Error Message:', error instanceof Error ? error.message : 'Unknown error');
+        console.error('Stack Trace:', error instanceof Error ? error.stack : '');
+        console.error('================================================================================\n\n');
+
+        res.status(500).json({
+            message: 'Internal server error',
+            error: error instanceof Error ? error.message : 'Unknown error'
+        });
     }
 };
 
@@ -111,10 +117,13 @@ export const login = async (req: Request, res: Response) => {
             },
         });
     } catch (error) {
-        console.error('Login error:', error);
-        if (error instanceof Error) {
-            console.error('Error details:', error.message, error.stack);
-        }
+        console.error('\n\n================================================================================');
+        console.error('❌ LOGIN ERROR ❌');
+        console.error('--------------------------------------------------------------------------------');
+        console.error('Error Message:', error instanceof Error ? error.message : 'Unknown error');
+        console.error('Stack Trace:', error instanceof Error ? error.stack : '');
+        console.error('================================================================================\n\n');
+
         res.status(500).json({ message: 'Internal server error' });
     }
 };
