@@ -65,10 +65,19 @@ export const updateProduct = async (req: AuthRequest, res: Response) => {
         const orgId = req.user?.orgId;
         if (!orgId) return res.status(401).json({ message: 'Unauthorized' });
         const { id } = req.params;
+        const { name, sku, quantity, description, costPrice, sellingPrice, lowStockThreshold } = req.body;
 
         const product = await prisma.product.updateMany({
             where: { id, organizationId: orgId },
-            data: req.body,
+            data: {
+                name,
+                sku,
+                description,
+                quantity: (quantity !== undefined && quantity !== '') ? parseInt(quantity) : undefined,
+                costPrice: (costPrice !== undefined && costPrice !== '') ? parseFloat(costPrice) : undefined,
+                sellingPrice: (sellingPrice !== undefined && sellingPrice !== '') ? parseFloat(sellingPrice) : undefined,
+                lowStockThreshold: (lowStockThreshold !== undefined && lowStockThreshold !== '') ? parseInt(lowStockThreshold) : undefined,
+            },
         });
 
         if (product.count === 0) {
@@ -77,6 +86,7 @@ export const updateProduct = async (req: AuthRequest, res: Response) => {
 
         res.json({ message: 'Product updated' });
     } catch (error) {
+        console.log(error);
         res.status(500).json({ message: 'Error updating product' });
     }
 };
